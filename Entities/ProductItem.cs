@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Entities
+{
+    public class ProductItem
+    {
+        public int Id { get; set; }
+        public string productName { get; set; }
+        public string productMarca { get; set; }
+        public int productStock { get; set; }
+    }
+}
