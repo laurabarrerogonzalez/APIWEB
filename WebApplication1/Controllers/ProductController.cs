@@ -2,6 +2,7 @@
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Authentication;
 using System.Web.Http.Cors;
 using WebApplication1.IServices;
 
@@ -21,35 +22,109 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost(Name = "InsertProduct")]
-        public int Post([FromBody] ProductItem productItem)
+        public int Post([FromQuery] string userNombreUsuario, [FromQuery] string userContraseña, [FromBody] ProductItem productItem)
         {
-            return _productService.insertProduct(productItem);
+            var selectedUser = _serviceContext.Set<UserItem>()
+                               .Where(u => u.NombreUsuario == userNombreUsuario
+                               && u.Contraseña == userContraseña
+                               && u.Rol == 1)
+                               .FirstOrDefault();
+
+            if (selectedUser != null)
+            {
+                return _productService.insertProduct(productItem);
+            }
+            else
+            {
+                throw new InvalidCredentialException("El ususario no esta autorizado o no existe");
+            }
         }
 
 
 
         [HttpPut("{id}", Name = "UpdateProduct")]
-        public IActionResult Put(int id, [FromBody] ProductItem updatedProductItem)
+        public IActionResult Put(int id, [FromHeader] string userNombreUsuario, [FromHeader] string userContraseña, [FromBody] ProductItem updatedProductItem)
         {
-            var existingProductItem = _serviceContext.Set<ProductItem>()
-                                        .Where(p =>p.Id == id  )
-                                        .FirstOrDefault();
-        
+            var existingUser = _serviceContext.Set<UserItem>()
+                .Where(u => u.NombreUsuario == userNombreUsuario && u.Contraseña == userContraseña && u.Rol == 1)
+                .FirstOrDefault();
 
-            if (existingProductItem == null) { 
-            
+            if (existingUser == null)
+            {
+                return Unauthorized(); // Cambiamos NotFound a Unauthorized para ocultar que existe o no el usuario.
+            }
+
+            var existingProductItem = _serviceContext.Set<ProductItem>()
+                .Where(p => p.Id == id)
+                .FirstOrDefault();
+
+            if (existingProductItem == null)
+            {
                 return NotFound();
             }
             else
-            {   existingProductItem.productName = updatedProductItem.productName;
+            {
+                existingProductItem.productName = updatedProductItem.productName;
                 existingProductItem.productMarca = updatedProductItem.productMarca;
-
             }
 
             _productService.UpdateProduct(existingProductItem);
             return Ok(existingProductItem);
-
-
         }
+
+
+        //[HttpPut("{id}", Name = "UpdateProduct")]
+        //public IActionResult Put([FromQuery] string userNombreUsuario, [FromQuery] string userContraseña, [FromBody] ProductItem productItem, int id, [FromBody] ProductItem updatedProductItem)
+        //{
+        //    var existingProductItem = _serviceContext.Set<UserItem>()
+        //                              .Where(u => u.NombreUsuario == userNombreUsuario
+        //                               && u.Contraseña == userContraseña
+        //                               && u.Rol == 1)
+        //                               .FirstOrDefault();
+
+
+        //    //.Where(p =>p.Id == id  )
+        //    //.FirstOrDefault();
+
+
+        //    if (existingProductItem == null) { 
+
+        //        return NotFound();
+        //    }
+        //    else
+        //    {   existingProductItem.productName = updatedProductItem.productName;
+        //        existingProductItem.productMarca = updatedProductItem.productMarca;
+
+        //    }
+
+        //    _productService.UpdateProduct(existingProductItem);
+        //    return Ok(existingProductItem);
+
+
+        //}
+
+
+        [HttpDelete("{id}", Name = "DeleteProduct")]
+        public IActionResult Delete(int id)
+        {
+            var existingProductItem = _serviceContext.Set<ProductItem>()
+                                        .FirstOrDefault(p => p.Id == id);
+
+            if (existingProductItem == null)
+            {
+                return NotFound();
+            }
+
+            _productService.DeleteProduct(existingProductItem);
+            return Ok(existingProductItem);
+        }
+
+
+
+
+
+
+        
     }
 }
+    

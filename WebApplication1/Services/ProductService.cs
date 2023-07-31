@@ -3,6 +3,7 @@ using Entities;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.IServices;
 
+
 namespace WebApplication1.Services
 {
     public class ProductService : BaseContextService, IProductService
@@ -33,12 +34,15 @@ namespace WebApplication1.Services
 
 
 
+        public void DeleteProduct(ProductItem productItem)
+        {
+            _serviceContext.Set<ProductItem>().Remove(productItem);
+            _serviceContext.SaveChanges();
+        }
 
-
-
-
-
-       
-
+        void IProductService.UpdateProduct(UserItem existingProductItem)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

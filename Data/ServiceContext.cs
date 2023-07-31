@@ -14,10 +14,26 @@ namespace Data
     {
         public ServiceContext(DbContextOptions<ServiceContext> options) : base(options) { }
         public DbSet<ProductItem> Products { get; set; }
+
+
+
+
+        public DbSet<UserItem> Users { get; set; }
+
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<ProductItem>(entity => {
                 entity.ToTable("Products");
+            });
+
+
+
+            builder.Entity<UserItem>(entity =>
+            {
+                entity.ToTable("Users");
+                entity.HasKey(u => u.Id);
             });
         }
     }

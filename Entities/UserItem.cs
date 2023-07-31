@@ -8,10 +8,13 @@ namespace Entities
 {
     public class UserItem
     {
-        public int UserId {  get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public int UserRol { get; set; }
+        public int Id { get; set; }
+        public string NombreUsuario { get; set; }
+        public string Contraseña { get; set; }
+        public int Rol { get; set; }
+
+
+
+        //public int UserRol { get; set; }
     }
 }

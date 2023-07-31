@@ -13,6 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IUserService, UserService> ();
 
 builder.Services.AddDbContext<ServiceContext>(
  options => options.UseSqlServer("name=ConnectionStrings:ServiceContext"));
