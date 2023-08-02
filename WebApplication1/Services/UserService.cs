@@ -11,8 +11,6 @@ namespace WebApplication1.Services
         {
 
         }
-
-
         public int insertUser(UserItem userItem)
         {
             _serviceContext.Users.Add(userItem);

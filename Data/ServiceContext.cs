@@ -34,6 +34,13 @@ namespace Data
             {
                 entity.ToTable("Users");
                 entity.HasKey(u => u.Id);
+                entity.HasOne<RolItem>().WithMany().HasForeignKey(u => u.Rol);
+            });
+
+            builder.Entity<RolItem>(entity =>
+            {
+                entity.ToTable("Roltype");
+                entity.HasKey(r => r.IdRol);
             });
         }
     }

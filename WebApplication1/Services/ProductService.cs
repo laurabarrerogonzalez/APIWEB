@@ -12,9 +12,7 @@ namespace WebApplication1.Services
         {
 
         }
-
-   
-
+            
         public int insertProduct(ProductItem productItem)
         {
                 _serviceContext.Products.Add(productItem);
@@ -32,12 +30,18 @@ namespace WebApplication1.Services
 
         }
 
-
-
-        public void DeleteProduct(ProductItem productItem)
+        public void DeleteProduct(int productId)
         {
-            _serviceContext.Set<ProductItem>().Remove(productItem);
-            _serviceContext.SaveChanges();
+            var product = _serviceContext.Products.Find(productId);
+            if (product != null)
+            {
+                _serviceContext.Products.Remove(product);
+                _serviceContext.SaveChanges();
+            }
+            else
+            {
+                throw new InvalidOperationException("El producto no existe.");
+            }
         }
 
         void IProductService.UpdateProduct(UserItem existingProductItem)

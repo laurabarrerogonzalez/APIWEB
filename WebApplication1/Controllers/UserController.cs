@@ -70,7 +70,6 @@ namespace WebApplication1.Controllers
 
         }
 
-
         [HttpDelete("{id}", Name = "DeleteUser")]
         public IActionResult Delete(int id)
         {

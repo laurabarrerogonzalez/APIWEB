@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class ProductItem
+    public class Brand
     {
         [Key]
-        public int Id { get; set; }
-        public string productName { get; set; }
-        public string productMarca { get; set; }
-        public int productStock { get; set; }
-
-        [ForeignKey("Brand")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdBrand { get; set; }
+        public string BrandName{ get; set; }
+
+        // Relación con productos (uno a muchos)
+        public ICollection<ProductItem> Products { get; set; }
+
     }
 }

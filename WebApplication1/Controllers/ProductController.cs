@@ -3,13 +3,17 @@ using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using System.Web.Http.Cors;
 using WebApplication1.IServices;
+using WebApplication1.Services;
 
 namespace WebApplication1.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    [ApiController]
     [Route("[controller]/[action]")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -22,6 +26,7 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost(Name = "InsertProduct")]
+        //[Authorize(IdRol = 1)]
         public int Post([FromQuery] string userNombreUsuario, [FromQuery] string userContraseña, [FromBody] ProductItem productItem)
         {
             var selectedUser = _serviceContext.Set<UserItem>()
@@ -43,6 +48,7 @@ namespace WebApplication1.Controllers
 
 
         [HttpPut("{id}", Name = "UpdateProduct")]
+       
         public IActionResult Put(int id, [FromHeader] string userNombreUsuario, [FromHeader] string userContraseña, [FromBody] ProductItem updatedProductItem)
         {
             var existingUser = _serviceContext.Set<UserItem>()
@@ -72,59 +78,37 @@ namespace WebApplication1.Controllers
             return Ok(existingProductItem);
         }
 
-
-        //[HttpPut("{id}", Name = "UpdateProduct")]
-        //public IActionResult Put([FromQuery] string userNombreUsuario, [FromQuery] string userContraseña, [FromBody] ProductItem productItem, int id, [FromBody] ProductItem updatedProductItem)
-        //{
-        //    var existingProductItem = _serviceContext.Set<UserItem>()
-        //                              .Where(u => u.NombreUsuario == userNombreUsuario
-        //                               && u.Contraseña == userContraseña
-        //                               && u.Rol == 1)
-        //                               .FirstOrDefault();
-
-
-        //    //.Where(p =>p.Id == id  )
-        //    //.FirstOrDefault();
-
-
-        //    if (existingProductItem == null) { 
-
-        //        return NotFound();
-        //    }
-        //    else
-        //    {   existingProductItem.productName = updatedProductItem.productName;
-        //        existingProductItem.productMarca = updatedProductItem.productMarca;
-
-        //    }
-
-        //    _productService.UpdateProduct(existingProductItem);
-        //    return Ok(existingProductItem);
-
-
-        //}
-
-
-        [HttpDelete("{id}", Name = "DeleteProduct")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{productId}", Name = "DeleteProduct")]
+        
+        public IActionResult Delete([FromQuery] string userName, [FromQuery] string userPassword, int productId)
         {
-            var existingProductItem = _serviceContext.Set<ProductItem>()
-                                        .FirstOrDefault(p => p.Id == id);
+            var selectedUser = _serviceContext.Set<UserItem>()
+                   .Where(u => u.NombreUsuario == userName
+                       && u.Contraseña == userPassword
+                       && u.Rol == 1)
+                    .FirstOrDefault();
 
-            if (existingProductItem == null)
+            if (selectedUser != null)
             {
-                return NotFound();
-            }
+                _productService.DeleteProduct(productId);
 
-            _productService.DeleteProduct(existingProductItem);
-            return Ok(existingProductItem);
+                
+                return Ok(new { message = "Producto eliminado exitosamente" });
+            }
+            else
+            {
+                throw new InvalidCredentialException("El usuario no está autorizado o no existe");
+            }
         }
 
-
-
-
-
-
-        
+        [HttpGet(Name = "GetAllProducts")]
+        public IActionResult GetAllProducts()
+        {
+            // Aquí puedes implementar la lógica para obtener todos los productos
+            // y devolverlos a los usuarios (sin necesidad de autorización)
+            var products = _serviceContext.Set<ProductItem>().ToList();
+            return Ok(products);
+        }
     }
 }
     
