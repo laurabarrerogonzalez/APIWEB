@@ -73,36 +73,6 @@ namespace WebApplication1.Controllers
         }
 
 
-        //[HttpPut("{id}", Name = "UpdateProduct")]
-        //public IActionResult Put([FromQuery] string userNombreUsuario, [FromQuery] string userContraseña, [FromBody] ProductItem productItem, int id, [FromBody] ProductItem updatedProductItem)
-        //{
-        //    var existingProductItem = _serviceContext.Set<UserItem>()
-        //                              .Where(u => u.NombreUsuario == userNombreUsuario
-        //                               && u.Contraseña == userContraseña
-        //                               && u.Rol == 1)
-        //                               .FirstOrDefault();
-
-
-        //    //.Where(p =>p.Id == id  )
-        //    //.FirstOrDefault();
-
-
-        //    if (existingProductItem == null) { 
-
-        //        return NotFound();
-        //    }
-        //    else
-        //    {   existingProductItem.productName = updatedProductItem.productName;
-        //        existingProductItem.productMarca = updatedProductItem.productMarca;
-
-        //    }
-
-        //    _productService.UpdateProduct(existingProductItem);
-        //    return Ok(existingProductItem);
-
-
-        //}
-
 
         [HttpDelete("{id}", Name = "DeleteProduct")]
         public IActionResult Delete(int id)
