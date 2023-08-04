@@ -8,6 +8,9 @@ namespace Entities
 {
     public class UserItem
     {
+        public object customerId;
+        public object customersName;
+
         public int Id { get; set; }
         public string NombreUsuario { get; set; }
         public string Contraseña { get; set; }

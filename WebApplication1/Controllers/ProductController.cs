@@ -88,12 +88,6 @@ namespace WebApplication1.Controllers
             _productService.DeleteProduct(existingProductItem);
             return Ok(existingProductItem);
         }
-
-
-
-
-
-
         
     }
 }

@@ -14,13 +14,8 @@ namespace Data
     {
         public ServiceContext(DbContextOptions<ServiceContext> options) : base(options) { }
         public DbSet<ProductItem> Products { get; set; }
-
-
-
-
+        public DbSet<CustomersItem> Customers { get; set; }
         public DbSet<UserItem> Users { get; set; }
-
-
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -28,13 +23,17 @@ namespace Data
                 entity.ToTable("Products");
             });
 
-
-
             builder.Entity<UserItem>(entity =>
             {
                 entity.ToTable("Users");
                 entity.HasKey(u => u.Id);
             });
+            
+            builder.Entity<CustomersItem>(entity => {
+                entity.ToTable("Customers");
+            });
+
+
         }
     }
     public class ServiceContextFactory : IDesignTimeDbContextFactory<ServiceContext>
