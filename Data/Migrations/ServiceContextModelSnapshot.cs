@@ -45,6 +45,23 @@ namespace Data.Migrations
                     b.ToTable("Products", (string)null);
                 });
 
+            modelBuilder.Entity("Entities.RolItem", b =>
+                {
+                    b.Property<int>("IdRol")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdRol"));
+
+                    b.Property<string>("RolName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdRol");
+
+                    b.ToTable("Roltype", (string)null);
+                });
+
             modelBuilder.Entity("Entities.UserItem", b =>
                 {
                     b.Property<int>("Id")
@@ -66,7 +83,18 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Rol");
+
                     b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("Entities.UserItem", b =>
+                {
+                    b.HasOne("Entities.RolItem", null)
+                        .WithMany()
+                        .HasForeignKey("Rol")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

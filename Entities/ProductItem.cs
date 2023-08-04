@@ -16,7 +16,7 @@ namespace Entities
         public string productMarca { get; set; }
         public int productStock { get; set; }
 
-        [ForeignKey("Brand")]
-        public int IdBrand { get; set; }
+        //[ForeignKey("Brand")]
+        //public int IdBrand { get; set; }
     }
 }

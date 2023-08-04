@@ -14,19 +14,17 @@ namespace Data
     {
         public ServiceContext(DbContextOptions<ServiceContext> options) : base(options) { }
         public DbSet<ProductItem> Products { get; set; }
-
-
-
-
         public DbSet<UserItem> Users { get; set; }
+        public DbSet<RolItem> RolItem { get; set; }
+      
 
 
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<ProductItem>(entity => {
-                entity.ToTable("Products");
-            });
+            //builder.Entity<ProductItem>(entity => {
+            //    entity.ToTable("Products");
+            //});
 
 
 
@@ -42,6 +40,8 @@ namespace Data
                 entity.ToTable("Roltype");
                 entity.HasKey(r => r.IdRol);
             });
+
+           
         }
     }
     public class ServiceContextFactory : IDesignTimeDbContextFactory<ServiceContext>

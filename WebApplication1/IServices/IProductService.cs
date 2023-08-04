@@ -7,7 +7,7 @@ namespace WebApplication1.IServices
     {
         int insertProduct(ProductItem productItem);
         void UpdateProduct(ProductItem existingProductItem);
-        void UpdateProduct(UserItem existingProductItem);
+        //void UpdateProduct(UserItem existingProductItem);
         void DeleteProduct(int productId);
     }
 }

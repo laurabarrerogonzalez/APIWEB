@@ -3,7 +3,6 @@ using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using System.Web.Http.Cors;
 using WebApplication1.IServices;
 using WebApplication1.Services;
@@ -26,7 +25,7 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost(Name = "InsertProduct")]
-        //[Authorize(IdRol = 1)]
+        
         public int Post([FromQuery] string userNombreUsuario, [FromQuery] string userContraseña, [FromBody] ProductItem productItem)
         {
             var selectedUser = _serviceContext.Set<UserItem>()
@@ -71,7 +70,7 @@ namespace WebApplication1.Controllers
             else
             {
                 existingProductItem.productName = updatedProductItem.productName;
-                existingProductItem.productMarca = updatedProductItem.productMarca;
+                //existingProductItem.productMarca = updatedProductItem.productMarca;
             }
 
             _productService.UpdateProduct(existingProductItem);
