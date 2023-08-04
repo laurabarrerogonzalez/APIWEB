@@ -12,18 +12,18 @@ namespace WebApplication1.Controllers
     [Route("[controller]/[action]")]
     public class CustomerController : ControllerBase
     {
-        private readonly IuserCustomer _productService;
+        private readonly IuserCustomer _customerService;
         private readonly ServiceContext _serviceContext;
 
 
         public CustomerController(IuserCustomer customerService, ServiceContext serviceContext)
         {
-            _productService = customerService;
+            _customerService = customerService;
             _serviceContext = serviceContext;
         }
 
-        [HttpPost(Name = "InsertCustomer")]
-        public int Post([FromQuery] string userNombreUsuario, [FromQuery] string userContraseña, [FromBody] CustomersItem customerItem)
+        [HttpPost(Name = "insertIuserCustomer")]
+        public int Post([FromQuery] string userNombreUsuario, [FromQuery] string userContraseña, [FromBody] CustomerItem customerItem)
         {
             var selectedUser = _serviceContext.Set<UserItem>()
                                .Where(u => u.NombreUsuario == userNombreUsuario
@@ -33,42 +33,31 @@ namespace WebApplication1.Controllers
 
             if (selectedUser != null)
             {
-                return _productService.insertIuserCustomer(customerItem);
+                return _customerService.insertIuserCustomer(customerItem);
             }
             else
             {
                 throw new InvalidCredentialException("El ususario no esta autorizado o no existe");
             }
         }
-
-        [HttpPut("{id}", Name = "UpdateIuserCustomer")]
-        public IActionResult Put(int id, [FromHeader] string userNombreUsuario, [FromHeader] string userContraseña, [FromBody] CustomersItem UpdateIuserCustomer)
+        [HttpPut("{customerId}", Name = "UpdateCustomer")]
+        public IActionResult Put([FromQuery] string userNombreUsuario, [FromQuery] string userContraseña, int customerId, [FromBody] CustomerItem updatedCustomer)
         {
-            var existingCustomersItem = _serviceContext.Set<UserItem>()
-                .Where(u => u.NombreUsuario == userNombreUsuario && u.Contraseña == userContraseña && u.Rol == 1)
-                .FirstOrDefault();
+            var selectedUser = _serviceContext.Set<UserItem>()
+                               .Where(u => u.NombreUsuario == userNombreUsuario
+                               && u.Contraseña == userContraseña
+                               && u.Rol == 1)
+                               .FirstOrDefault();
 
-            if (existingCustomersItem == null)
+            if (selectedUser != null)
             {
-                return Unauthorized(); // Cambiamos NotFound a Unauthorized para ocultar que existe o no el usuario.
-            }
-
-            var CustomersItem = _serviceContext.Set<CustomersItem>()
-                .Where(p => p.CustomerId == id)
-                .FirstOrDefault();
-
-            if (CustomersItem == null)
-            {
-                return NotFound();
+                _customerService.UpdateIuserCustomer(customerId, updatedCustomer);
+                return NoContent();
             }
             else
             {
-                existingCustomersItem.customerId = UpdateIuserCustomer.customerId;
-                existingCustomersItem.customersName = UpdateIuserCustomer.customersName;
+                throw new InvalidCredentialException("El usuario no está autorizado o no existe");
             }
-
-            _productService.UpdateIuserCustomer(CustomersItem);
-            return Ok(existingCustomersItem);
         }
 
 
@@ -76,15 +65,15 @@ namespace WebApplication1.Controllers
         [HttpDelete("{id}", Name = "DeleteIuserCustomer")]
         public IActionResult Delete(int id)
         {
-            var existingCustomersItem = _serviceContext.Set<CustomersItem>()
-                                        .FirstOrDefault(p => p.CustomerId == id);
+            var existingCustomersItem = _serviceContext.Set<CustomerItem>()
+                                        .FirstOrDefault(p => p.Customer_Id == id);
 
             if (existingCustomersItem == null)
             {
                 return NotFound();
             }
 
-            _productService.DeleteIuserCustomer(existingCustomersItem);
+            _customerService.DeleteIuserCustomer(existingCustomersItem);
             return Ok(existingCustomersItem);
 
         }

@@ -1,4 +1,5 @@
 using Data;
+using Data.Migrations;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.IServices;
 using WebApplication1.Services;
@@ -14,7 +15,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IUserService, UserService> ();
-
+builder.Services.AddScoped<IuserCustomer, CustumerServices>();
 builder.Services.AddDbContext<ServiceContext>(
  options => options.UseSqlServer("name=ConnectionStrings:ServiceContext"));
 

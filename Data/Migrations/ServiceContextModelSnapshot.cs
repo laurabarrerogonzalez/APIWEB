@@ -21,14 +21,19 @@ namespace Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Entities.CustomersItem", b =>
+            modelBuilder.Entity("Entities.CustomerItem", b =>
                 {
-                    b.Property<int>("CustomerId")
+                    b.Property<int>("Customer_Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Customer_Id"));
 
                     b.Property<string>("CustomersName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Customer_Id");
 
                     b.ToTable("Customers", (string)null);
                 });

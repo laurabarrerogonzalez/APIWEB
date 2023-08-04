@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ServiceContext))]
-    [Migration("20230803144842_Customer")]
-    partial class Customer
+    [Migration("20230804160410_addIdAutomatico")]
+    partial class addIdAutomatico
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,14 +24,19 @@ namespace Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Entities.CustomersItem", b =>
+            modelBuilder.Entity("Entities.CustomerItem", b =>
                 {
-                    b.Property<int>("CustomerId")
+                    b.Property<int>("Customer_Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Customer_Id"));
 
                     b.Property<string>("CustomersName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Customer_Id");
 
                     b.ToTable("Customers", (string)null);
                 });
