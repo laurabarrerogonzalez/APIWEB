@@ -14,12 +14,8 @@ namespace Data
     {
         public ServiceContext(DbContextOptions<ServiceContext> options) : base(options) { }
         public DbSet<ProductItem> Products { get; set; }
-
-
-
-
+        public DbSet<OrderItem> Orders { get; set; }
         public DbSet<UserItem> Users { get; set; }
-
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -28,19 +24,19 @@ namespace Data
                 entity.ToTable("Products");
             });
 
-
-
             builder.Entity<UserItem>(entity =>
             {
                 entity.ToTable("Users");
-                entity.HasKey(u => u.Id);
-                entity.HasOne<RolItem>().WithMany().HasForeignKey(u => u.Rol);
             });
 
             builder.Entity<RolItem>(entity =>
             {
                 entity.ToTable("Roltype");
                 entity.HasKey(r => r.IdRol);
+            });
+
+            builder.Entity<OrderItem>(entity => {
+                entity.ToTable("Orders");
             });
         }
     }
@@ -58,4 +54,6 @@ namespace Data
             return new ServiceContext(optionsBuilder.Options);
         }
     }
+
 }
+

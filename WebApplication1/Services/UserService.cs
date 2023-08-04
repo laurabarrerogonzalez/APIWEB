@@ -11,12 +11,25 @@ namespace WebApplication1.Services
         {
 
         }
+
+
+
         public int insertUser(UserItem userItem)
         {
             _serviceContext.Users.Add(userItem);
             _serviceContext.SaveChanges();
             return userItem.Id;
         }
+
+        public int insertUsers(UserItem userItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        //public void UpdateUser(UserItem existingUserItem)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         void IUserService.UpdateUser(UserItem existingUserItem)
         {
@@ -28,6 +41,13 @@ namespace WebApplication1.Services
         {
             _serviceContext.Set<UserItem>().Remove(userItem);
             _serviceContext.SaveChanges();
+        }
+
+
+
+        public void DeleteUser(int userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
