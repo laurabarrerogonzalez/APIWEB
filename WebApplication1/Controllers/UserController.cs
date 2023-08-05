@@ -16,7 +16,7 @@ namespace WebApplication1.Controllers
     {
         private readonly IUserService _userService;
         private readonly ServiceContext _serviceContext;
-        
+
 
         public UserController(IUserService userService, ServiceContext serviceContext)
         {
@@ -34,13 +34,13 @@ namespace WebApplication1.Controllers
                                .FirstOrDefault();
             if (selectedUser != null)
             {
-                int userId = _userService.insertUser(userItem);
+                int userId = _userService.insertUsers(userItem);
                 return Ok(userItem);
             }
             else
             {
                 return Unauthorized("El usuario no está autorizado o no existe");
-               
+
             }
         }
 
@@ -70,19 +70,27 @@ namespace WebApplication1.Controllers
 
         }
 
-        [HttpDelete("{id}", Name = "DeleteUser")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{productId}", Name = "DeleteUser")]
+
+        public IActionResult Delete([FromQuery] string userName, [FromQuery] string userPassword, int UserId)
         {
-            var existingUserItem = _serviceContext.Set<UserItem>()
-                                        .FirstOrDefault(p => p.Id == id);
+            var selectedUser = _serviceContext.Set<UserItem>()
+                   .Where(u => u.NombreUsuario == userName
+                       && u.Contraseña == userPassword
+                       && u.Rol == 1)
+                    .FirstOrDefault();
 
-            if (existingUserItem == null)
+            if (selectedUser != null)
             {
-                return NotFound();
-            }
+                _userService.DeleteUser(UserId);
 
-            _userService.DeleteUser(existingUserItem);
-            return Ok(existingUserItem);
+
+                return Ok(new { message = "Producto eliminado exitosamente" });
+            }
+            else
+            {
+                throw new InvalidCredentialException("El usuario no está autorizado o no existe");
+            }
         }
 
     }

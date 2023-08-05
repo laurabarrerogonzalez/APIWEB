@@ -4,8 +4,8 @@ namespace WebApplication1.IServices
 {
     public interface IUserService
     {
-        int insertUser(UserItem userItem);
+        int insertUsers(UserItem userItem);
         void UpdateUser(UserItem existingUserItem);
-        void DeleteUser(UserItem userItem);
+        void DeleteUser(int userId);
     }
 }
