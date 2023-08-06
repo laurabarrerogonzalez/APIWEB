@@ -11,28 +11,23 @@ namespace WebApplication1.Services
         {
         }
 
-        //public void DeleteOrder(int orderId)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public int insertOrder(OrderItem orderItem)
 
-        public int InsertOrder(OrderItem orderItem)
-        {
-            _serviceContext.Orders.Add(orderItem);
+        {   _serviceContext.Orders.Add(orderItem);
             _serviceContext.SaveChanges();
+
+            var orderProducts = orderItem.Products;
+            //var customerOrder = orderItem.IdOrder;
+            foreach (var product in orderProducts)
+            {
+                var newOrderDetail = new DetallePedidoItem();
+                newOrderDetail.IdOrder = orderItem.IdOrder;
+                newOrderDetail.IdProduct = product.IdProduct;
+                _serviceContext.DetallesPedido.Add(newOrderDetail);
+            }
+           
             return orderItem.IdOrder;
         }
-
-        public int insertOrder(OrderItem orderItem)
-        {
-            throw new NotImplementedException();
-        }
-
-        //public void UpdateOrder(OrderItem existingOrderItem)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
 
 
         public void UpdateOrder(OrderItem existingOrderItem)
@@ -55,5 +50,9 @@ namespace WebApplication1.Services
             }
         }
 
+        public object GetOrderById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

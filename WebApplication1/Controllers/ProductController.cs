@@ -60,7 +60,7 @@ namespace WebApplication1.Controllers
             }
 
             var existingProductItem = _serviceContext.Set<ProductItem>()
-                .Where(p => p.Id == id)
+                .Where(p => p.IdProduct == id)
                 .FirstOrDefault();
 
             if (existingProductItem == null)
@@ -70,7 +70,7 @@ namespace WebApplication1.Controllers
             else
             {
                 existingProductItem.productName = updatedProductItem.productName;
-                //existingProductItem.productMarca = updatedProductItem.productMarca;
+                
             }
 
             _productService.UpdateProduct(existingProductItem);
@@ -100,14 +100,22 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [HttpGet(Name = "GetAllProducts")]
-        public IActionResult GetAllProducts()
+       
+
+        [HttpGet(Name = "GetProducts")]
+        public IActionResult GetProducts(string productMarca = null)
         {
-            // Aquí puedes implementar la lógica para obtener todos los productos
-            // y devolverlos a los usuarios (sin necesidad de autorización)
-            var products = _serviceContext.Set<ProductItem>().ToList();
+            IQueryable<ProductItem> productsQuery = _serviceContext.Set<ProductItem>();
+
+            if (!string.IsNullOrEmpty(productMarca))
+            {
+                productsQuery = productsQuery.Where(product => product.productMarca == productMarca);
+            }
+
+            var products = productsQuery.ToList();
             return Ok(products);
         }
+
     }
 }
     

@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ServiceContext))]
-    partial class ServiceContextModelSnapshot : ModelSnapshot
+    [Migration("20230806203915_DetallePedidoFKIdProductII")]
+    partial class DetallePedidoFKIdProductII
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,6 +98,9 @@ namespace Data.Migrations
                     b.Property<bool>("Charged")
                         .HasColumnType("bit");
 
+                    b.Property<int>("CustomerIdCustomer")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Delivered")
                         .HasColumnType("bit");
 
@@ -105,6 +111,8 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("IdOrder");
+
+                    b.HasIndex("CustomerIdCustomer");
 
                     b.HasIndex("IdCustomer");
 
@@ -119,9 +127,6 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdProduct"));
 
-                    b.Property<int?>("OrderItemIdOrder")
-                        .HasColumnType("int");
-
                     b.Property<string>("productMarca")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -134,8 +139,6 @@ namespace Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("IdProduct");
-
-                    b.HasIndex("OrderItemIdOrder");
 
                     b.ToTable("Products", (string)null);
                 });
@@ -196,13 +199,13 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Entities.OrderItem", "Orders")
-                        .WithMany()
+                        .WithMany("DetallesPedido")
                         .HasForeignKey("OrdersIdOrder")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Entities.ProductItem", "Products")
-                        .WithMany()
+                        .WithMany("DetallesPedido")
                         .HasForeignKey("ProductsIdProduct")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -214,23 +217,29 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Entities.OrderItem", b =>
                 {
+                    b.HasOne("Entities.CustomerItem", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerIdCustomer")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Entities.CustomerItem", null)
                         .WithMany()
                         .HasForeignKey("IdCustomer")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("Entities.ProductItem", b =>
-                {
-                    b.HasOne("Entities.OrderItem", null)
-                        .WithMany("Products")
-                        .HasForeignKey("OrderItemIdOrder");
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Entities.OrderItem", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("DetallesPedido");
+                });
+
+            modelBuilder.Entity("Entities.ProductItem", b =>
+                {
+                    b.Navigation("DetallesPedido");
                 });
 #pragma warning restore 612, 618
         }

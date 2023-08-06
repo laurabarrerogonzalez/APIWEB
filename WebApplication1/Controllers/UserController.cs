@@ -49,7 +49,7 @@ namespace WebApplication1.Controllers
         public IActionResult Put(int id, [FromBody] UserItem updatedUserItem)
         {
             var existingUserItem = _serviceContext.Set<UserItem>()
-                                        .Where(p => p.Id == id)
+                                        .Where(p => p.IdUser == id)
                                         .FirstOrDefault();
 
 

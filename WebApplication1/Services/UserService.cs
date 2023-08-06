@@ -12,13 +12,11 @@ namespace WebApplication1.Services
 
         }
 
-
-
         public int insertUser(UserItem userItem)
         {
             _serviceContext.Users.Add(userItem);
             _serviceContext.SaveChanges();
-            return userItem.Id;
+            return userItem.IdUser;
         }
 
         public int insertUsers(UserItem userItem)
@@ -26,10 +24,6 @@ namespace WebApplication1.Services
             throw new NotImplementedException();
         }
 
-        //public void UpdateUser(UserItem existingUserItem)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         void IUserService.UpdateUser(UserItem existingUserItem)
         {

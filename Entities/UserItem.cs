@@ -12,7 +12,7 @@ namespace Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int IdUser { get; set; }
         public string NombreUsuario { get; set; }
         public string Contraseña { get; set; }
         public int Rol { get; set; }

@@ -17,7 +17,7 @@ namespace WebApplication1.Services
         {
                 _serviceContext.Products.Add(productItem);
                 _serviceContext.SaveChanges();
-                return productItem.Id;
+                return productItem.IdProduct;
            
         }
 
@@ -44,9 +44,5 @@ namespace WebApplication1.Services
             }
         }
 
-        //void IProductService.UpdateProduct(UserItem existingProductItem)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

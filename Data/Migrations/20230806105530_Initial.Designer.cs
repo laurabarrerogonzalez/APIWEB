@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ServiceContext))]
-    partial class ServiceContextModelSnapshot : ModelSnapshot
+    [Migration("20230806105530_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,21 +68,11 @@ namespace Data.Migrations
                     b.Property<int>("IdProduct")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrdersIdOrder")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductsIdProduct")
-                        .HasColumnType("int");
-
                     b.HasKey("IdDetalle");
 
                     b.HasIndex("IdOrder");
 
                     b.HasIndex("IdProduct");
-
-                    b.HasIndex("OrdersIdOrder");
-
-                    b.HasIndex("ProductsIdProduct");
 
                     b.ToTable("Detalle", (string)null);
                 });
@@ -119,9 +112,6 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdProduct"));
 
-                    b.Property<int?>("OrderItemIdOrder")
-                        .HasColumnType("int");
-
                     b.Property<string>("productMarca")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -134,8 +124,6 @@ namespace Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("IdProduct");
-
-                    b.HasIndex("OrderItemIdOrder");
 
                     b.ToTable("Products", (string)null);
                 });
@@ -183,27 +171,15 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Entities.DetallePedidoItem", b =>
                 {
-                    b.HasOne("Entities.OrderItem", null)
-                        .WithMany()
+                    b.HasOne("Entities.OrderItem", "Orders")
+                        .WithMany("DetallesPedido")
                         .HasForeignKey("IdOrder")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.ProductItem", null)
-                        .WithMany()
-                        .HasForeignKey("IdProduct")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.OrderItem", "Orders")
-                        .WithMany()
-                        .HasForeignKey("OrdersIdOrder")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Entities.ProductItem", "Products")
-                        .WithMany()
-                        .HasForeignKey("ProductsIdProduct")
+                        .WithMany("DetallesPedido")
+                        .HasForeignKey("IdProduct")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -214,23 +190,28 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Entities.OrderItem", b =>
                 {
-                    b.HasOne("Entities.CustomerItem", null)
-                        .WithMany()
+                    b.HasOne("Entities.CustomerItem", "Customer")
+                        .WithMany("Orders")
                         .HasForeignKey("IdCustomer")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("Entities.ProductItem", b =>
+            modelBuilder.Entity("Entities.CustomerItem", b =>
                 {
-                    b.HasOne("Entities.OrderItem", null)
-                        .WithMany("Products")
-                        .HasForeignKey("OrderItemIdOrder");
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Entities.OrderItem", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("DetallesPedido");
+                });
+
+            modelBuilder.Entity("Entities.ProductItem", b =>
+                {
+                    b.Navigation("DetallesPedido");
                 });
 #pragma warning restore 612, 618
         }

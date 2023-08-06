@@ -7,5 +7,6 @@ namespace WebApplication1.IServices
         int insertOrder(OrderItem orderItem);
         void UpdateOrder(OrderItem existingOrderItem);
         void DeleteOrder(int orderId);
+        object GetOrderById(int id);
     }
 }
