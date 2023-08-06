@@ -27,7 +27,7 @@
 <li> SQL Server.</li>
 <li> JSON Server (para pruebas).</li></ul>
 
-###### Instalacion
+## Instalacion
 
 <ol>
 <li>Clona el repositorio desde GitHub:
@@ -36,17 +36,17 @@ git clone https://github.com/laurabarrerogonzalez/APIWEB.git</li>
 <li>Abre el proyecto en Visual Studio Code:.</li>
   
 <li>Configura la cadena de conexión de la base de datos en el archivo appsettings.json:</li>
-  <img src="https://i.postimg.cc/NFzsF8N3/Black-and-White-Modern-Shoes-Store-Logo.png" alt="" width="300px" />
+  <img src="https://i.postimg.cc/fL601VpZ/json-string.png" alt="" width="300px" />
   
 <li>Crea la base de datos ejecutando las migraciones:
 dotnet ef database update.</li>
 </ol>
 
-###### Uso
+## Uso
 
 La API "Sneaker City" cuenta con los siguientes endpoints para gestionar los proveedores, productos, clientes y pedidos:
 
-## Proveedores
+### Proveedores
 
 - `GET /api/providers`: Obtiene todos los proveedores.
 - `GET /api/providers/{id}`: Obtiene un proveedor por su ID.
@@ -54,7 +54,7 @@ La API "Sneaker City" cuenta con los siguientes endpoints para gestionar los pro
 - `PUT /api/providers/{id}`: Actualiza un proveedor existente.
 - `DELETE /api/providers/{id}`: Elimina un proveedor por su ID.
 
-## Productos
+### Productos
 
 - `GET /api/products`: Obtiene todos los productos del catálogo.
 - `GET /api/products/{id}`: Obtiene un producto por su ID.
@@ -63,7 +63,7 @@ La API "Sneaker City" cuenta con los siguientes endpoints para gestionar los pro
 - `DELETE /api/products/{id}`: Elimina un producto por su ID.
 - `GET /api/products/brands/{brand}`: Obtiene todos los productos de una marca específica.
 
-## Clientes
+### Clientes
 
 - `GET /api/clients`: Obtiene todos los clientes.
 - `GET /api/clients/{id}`: Obtiene un cliente por su ID.
@@ -71,7 +71,7 @@ La API "Sneaker City" cuenta con los siguientes endpoints para gestionar los pro
 - `PUT /api/clients/{id}`: Actualiza un cliente existente.
 - `DELETE /api/clients/{id}`: Elimina un cliente por su ID.
 
-## Pedidos
+### Pedidos
 
 - `GET /api/orders`: Obtiene todos los pedidos.
 - `GET /api/orders/{id}`: Obtiene un pedido por su ID.
@@ -81,7 +81,7 @@ La API "Sneaker City" cuenta con los siguientes endpoints para gestionar los pro
 
 Para acceder a las gestiones de proveedores, se debe proporcionar una contraseña
 
-###### Equipo
+## Equipo
 - Laura Barrero  https://github.com/laurabarrerogonzalez /Scrum Master
 - Christian Jaiki https://github.com/ChristianJaiki12
 - Juan Pablo Lumbi https://github.com/juanpablolumbipoveda
