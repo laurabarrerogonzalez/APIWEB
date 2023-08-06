@@ -1,9 +1,7 @@
 #  Proyecto: Apiweb para un pequeño comercio.
 
 ##  SNEAKER CITY API 
-
 <img src="https://i.postimg.cc/NFzsF8N3/Black-and-White-Modern-Shoes-Store-Logo.png" alt="" width="500px" />
-
 ##### Tabla de contenido:
 - [Proyecto](#Proyecto)
 - [Requisitos](#Requisitos)
@@ -33,10 +31,10 @@
 <li>Clona el repositorio desde GitHub:
 git clone https://github.com/laurabarrerogonzalez/APIWEB.git</li>
   
-<li>Abre el proyecto en Visual Studio Code:.</li>
+<li>Abre el proyecto en Visual Studio Code.</li>
   
 <li>Configura la cadena de conexión de la base de datos en el archivo appsettings.json:</li>
-  <img src="https://i.postimg.cc/fL601VpZ/json-string.png" alt="" width="300px" />
+  <img src="https://i.postimg.cc/fL601VpZ/json-string.png" alt="" width="400px" />
   
 <li>Crea la base de datos ejecutando las migraciones:
 dotnet ef database update.</li>
@@ -79,7 +77,7 @@ La API "Sneaker City" cuenta con los siguientes endpoints para gestionar los pro
 - `PUT /api/orders/{id}`: Actualiza un pedido existente.
 - `DELETE /api/orders/{id}`: Elimina un pedido por su ID.
 
-Para acceder a las gestiones de proveedores, se debe proporcionar una contraseña
+Para acceder a las gestiones de proveedores, se debe proporcionar una contraseña.
 
 ## Equipo
 - Laura Barrero  https://github.com/laurabarrerogonzalez /Scrum Master
@@ -114,13 +112,13 @@ Para acceder a las gestiones de proveedores, se debe proporcionar una contraseñ
 ## Metodología
 
 <ul>
-<li>Metodologia agil </li>
-<li>Cada miembro del equipo trabaja en su propio ordenador y crea una rama separada en el repositorio para trabajar en nuevas características o correcciones de errores. Las ramas fueron cada uno con su propio nombre</li>
+<li>Metodologia agil. </li>
+<li>Cada miembro del equipo trabaja en su propio ordenador y crea una rama separada en el repositorio para trabajar en nuevas características o correcciones de errores. Las ramas fueron cada uno con su propio nombre.</li>
 <li>Creación de ramas: Se utilizo 5 ramas para gestionar el flujo de trabajo:
 
 - Master (o main): Esta rama contiene el código estable y en producción.
 - Develop: Esta rama es donde se integran todas las características y se realizan las pruebas previas a la producción.</li>
-- Rama independiente ( Juan pablo, LauraBarrero, Christian): Estas son ramas independientes dodne cada uno trabajo segun la tarea asignada.</li>
+- Rama independiente ( Juan pablo, Laura Barrero, Christian): Estas son ramas independientes dodne cada uno trabajo segun la tarea asignada.</li>
 
 <p>Esta metodología nos permite trabajar de manera colaborativa y mantener un flujo de trabajo ordenado y eficiente. La utilización de ramas y fusiones nos ayuda a evitar conflictos y mantener un historial claro de cambios en el código. Además, las revisiones de código y pruebas frecuentes garantizan la calidad del software que entregamos.
 
