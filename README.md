@@ -1,8 +1,10 @@
 #  Proyecto: Apiweb para un pequeño comercio.
 
 ##  SNEAKER CITY API 
-<img src="https://i.postimg.cc/NFzsF8N3/Black-and-White-Modern-Shoes-Store-Logo.png" alt="" width="500px" />
+<img src="https://i.postimg.cc/gkLgwRmy/Sneaker.png" alt="" width="500px" />
+
 ##### Tabla de contenido:
+
 - [Proyecto](#Proyecto)
 - [Requisitos](#Requisitos)
 - [Instalacion](#Instalacion)
