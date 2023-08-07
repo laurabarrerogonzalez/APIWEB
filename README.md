@@ -39,20 +39,13 @@ git clone https://github.com/laurabarrerogonzalez/APIWEB.git</li>
   <img src="https://i.postimg.cc/fL601VpZ/json-string.png" alt="" width="400px" />
   
 <li>Crea la base de datos ejecutando las migraciones:
-dotnet ef database update.</li>
+update-database.</li>
 </ol>
 
 ## Uso
 
 La API "Sneaker City" cuenta con los siguientes endpoints para gestionar los proveedores, productos, clientes y pedidos:
 
-### Proveedores
-
-- `GET /api/providers`: Obtiene todos los proveedores.
-- `GET /api/providers/{id}`: Obtiene un proveedor por su ID.
-- `POST /api/providers`: Agrega un nuevo proveedor.
-- `PUT /api/providers/{id}`: Actualiza un proveedor existente.
-- `DELETE /api/providers/{id}`: Elimina un proveedor por su ID.
 
 ### Productos
 
