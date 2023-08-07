@@ -11,6 +11,7 @@
 - [Uso](#Uso)
 - [Equipo](#Equipo)
 - [Pilas](#Pilas)
+- [Next Steap](#Next-Steap)
 - [Metodología](#Metodología)
 
 ## Proyecto
@@ -103,6 +104,12 @@ Para acceder a las gestiones de proveedores, se debe proporcionar una contraseñ
   <img src="https://i.postimg.cc/43VKtLqb/github-logo-vector.png" alt="" width="70px" />
   
  </p>
+
+ ## Next Steap
+
+ <ul><li> Realacionar la tablas que restan.</li>
+<li> Generar el falso o verdadero si el pedido fue entregado y cobrado</li>
+<li> Generar los recursos optativos</li>
  
 ## Metodología
 
